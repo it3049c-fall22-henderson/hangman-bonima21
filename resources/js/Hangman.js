@@ -1,9 +1,9 @@
 class Hangman {
+
   constructor(_canvas) {
     if (!_canvas) {
-      throw new Error(`invalid canvas provided`);
+      throw new Error(`inva lid canvas provided`);
     }
-
     this.canvas = _canvas;
     this.ctx = this.canvas.getContext(`2d`);
   }
@@ -11,26 +11,40 @@ class Hangman {
   /**
    * This function takes a difficulty string as a patameter
    * would use the Fetch API to get a random word from the Hangman
-   * To get an easy word: https://hangman-micro-service-bpblrjerwh.now.sh?difficulty=easy
-   * To get an medium word: https://hangman-micro-service-bpblrjerwh.now.sh?difficulty=medium
-   * To get an hard word: https://hangman-micro-service-bpblrjerwh.now.sh?difficulty=hard
+   * To get an easy word: https://hangman-micro-service.herokuapp.com//?difficulty=easy
+   * To get an medium word: https://hangman-micro-service.herokuapp.com//?difficulty=medium
+   * To get an hard word: https://hangman-micro-service.herokuapp.com//?difficulty=hard
    * The results is a json object that looks like this:
    *    { word: "book" }
    * */
-  getRandomWord(difficulty) {
-    return fetch(
-      `https://hangman-micro-service-bpblrjerwh.now.sh?difficulty=${difficulty}`
-    )
-      .then((r) => r.json())
-      .then((r) => r.word);
-  }
 
-  /**
+     /**
    *
    * @param {string} difficulty a difficulty string to be passed to the getRandomWord Function
    * @param {function} next callback function to be called after a word is reveived from the API.
    */
-   async start(difficulty, next) {
+  
+   getRandomWord(difficulty) {
+    return fetch(`https://hangman-micro-service.herokuapp.com//?difficulty=${difficulty}`)
+    .then((r) => r.json())
+    .then((r) => r.word)
+  }
+  //    call the game start() method, the callback function should do the following
+  //       1. hide the startWrapper
+  //       2. show the gameWrapper
+  //       3. call the game getWordHolderText and set it to the wordHolderText
+  //       4. call the game getGuessessText and set it to the guessesText
+  //wordHolderText.textContent
+
+      /*
+    this.getRandomWord(difficulty)
+    .then(function(res){
+      const word = res;
+      console.log(word)
+    })
+    */
+
+ async start(difficulty, next) {
     // get word and set it to the class's this.word
     this.word = await this.getRandomWord(difficulty);
     console.log(this.word);
@@ -53,7 +67,7 @@ class Hangman {
    *
    * @param {string} letter the guessed letter.
    */
-   guess(letter) {
+  guess(letter) {
     //let guesses = [];
     //let letterWordArr =[]
     this.letter = letter;
@@ -104,7 +118,6 @@ class Hangman {
 
   }
 
-
   checkWin() {
     // using the word and the guesses array, figure out how many remaining unknowns.
     let wordUnknowns = 
@@ -125,7 +138,7 @@ class Hangman {
    * drawHead, drawBody, drawRightArm, drawLeftArm, drawRightLeg, or drawLeftLeg.
    * if the number wrong guesses is 6, then also set isOver to true and didWin to false.
    */
-   onWrongGuess() {
+  onWrongGuess() {
     let wordArrlength = this.word.length;
     let wordArr = this.word.split('');
 
@@ -134,6 +147,19 @@ class Hangman {
     guessArr.filter(function(word){
       word_onWrongGuess.includes(word);
     })
+/*
+    for(let i=0; i< wordArrlength; i++){
+      if(guessArr.length == i){
+        this.drawHead();
+        this.drawBody();
+        this.drawRightArm();
+        this.drawLeftArm();
+        this.drawRightLeg();
+        this.drawLeftLeg();
+      }
+    }
+
+  */
     if(guessArr.length == 1 ){
       this.drawHead();
     }
@@ -164,7 +190,7 @@ class Hangman {
    * It will have underscores in the correct number and places of the unguessed letters.
    * i.e.: if the word is BOOK, and the letter O has been guessed, this would return _ O O _
    */
-   getWordHolderText() {
+  getWordHolderText() {
     //this.guessed = false;
     let wordArrlength = this.word.length;
     let wordArr = this.word.split('');
@@ -183,7 +209,7 @@ class Hangman {
   console.log(wordHolderArr);
   return wordHolderArr;
 }
-   
+
 
   /**
    * This function returns a string of all the previous guesses, seperated by a comma
@@ -191,7 +217,7 @@ class Hangman {
    * (Guesses: A, B, C)
    * Hint: use the Array.prototype.join method.
    */
-   getGuessesText() {
+  getGuessesText() {
     return `Guessed: ` + this.guesses.join(', ');
   }
 
@@ -200,6 +226,11 @@ class Hangman {
    */
   clearCanvas() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    //hide the startWrapper
+    //show the gameWrapper
+    //let gamepanel = document.querySelectorAll('.hidden');
+    //console.log(gamepanel);
+    //gamepanel[0].remove('.hidden');
   }
 
   /**
@@ -220,11 +251,11 @@ class Hangman {
     this.ctx.arc(250, 85, 25, 0, Math.PI *2, false);
     this.ctx.stroke();
   }
+
   drawBody() {
     console.log("body")
     this.ctx.fillRect(245, 110, 10, 80, false);
   }
-
 
   drawRightArm() {
     console.log("RightArm")
@@ -234,6 +265,7 @@ class Hangman {
     this.ctx.stroke();
   }
 
+  
   drawLeftArm() {
     console.log("LeftArm")
     this.ctx.beginPath();
@@ -250,6 +282,7 @@ class Hangman {
     this.ctx.lineTo(170, 250);
     this.ctx.stroke();
   }
+
   drawRightLeg() {
     console.log("RightLeg")
     this.ctx.beginPath();
