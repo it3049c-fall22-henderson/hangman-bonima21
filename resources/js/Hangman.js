@@ -140,9 +140,26 @@ class Hangman {
    * It will have underscores in the correct number and places of the unguessed letters.
    * i.e.: if the word is BOOK, and the letter O has been guessed, this would return _ O O _
    */
-  getWordHolderText() {
-    return;
+   getWordHolderText() {
+    //this.guessed = false;
+    let wordArrlength = this.word.length;
+    let wordArr = this.word.split('');
+    let guessesArr = this.guesses;
+    let wordHolderArr = " ";
+    
+    for(let i=0; i< wordArrlength; i++){
+    if(guessesArr.includes(wordArr[i])){
+      wordHolderArr = wordHolderArr + wordArr[i];
+        //return wordHolderArr.push(wordArr[i]);
+    }else{
+      wordHolderArr = wordHolderArr + " _ ";
+      //return wordHolderArr.push("_ ");
+    };
   }
+  console.log(wordHolderArr);
+  return wordHolderArr;
+}
+   
 
   /**
    * This function returns a string of all the previous guesses, seperated by a comma
@@ -150,8 +167,8 @@ class Hangman {
    * (Guesses: A, B, C)
    * Hint: use the Array.prototype.join method.
    */
-  getGuessesText() {
-    return ``;
+   getGuessesText() {
+    return `Guessed: ` + this.guesses.join(', ');
   }
 
   /**
