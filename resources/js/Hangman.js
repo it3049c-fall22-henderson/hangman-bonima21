@@ -53,21 +53,71 @@ class Hangman {
    *
    * @param {string} letter the guessed letter.
    */
-  guess(letter) {
-    // Check if nothing was provided and throw an error if so
+   guess(letter) {
+    //let guesses = [];
+    //let letterWordArr =[]
+    this.letter = letter;
+    //console.log("you have input " + letter);
+    try{
+      // Check if nothing was provided and throw an error if so
+    if(letter.length < 1){
+      throw new Error("You have to input at least one letter!");
+    }
+    
     // Check for invalid cases (numbers, symbols, ...) throw an error if it is
+      if(!letter.match(/[a-zA-Z]/)){
+        throw new Error(letter + " is not letter! You have to input letters!");
+      } 
+
     // Check if more than one letter was provided. throw an error if it is.
-    // if it's a letter, convert it to lower case for consistency.
-    // check if this.guesses includes the letter. Throw an error if it has been guessed already.
-    // add the new letter to the guesses array.
+      if(letter.length > 1 ){
+        //console.log("You input more than one letter!");
+        throw new Error("You can not input more than one letter!");
+        }
+
+      // if it's a letter, convert it to lower case for consistency.
+      if(letter == letter.toUpperCase()){
+        letter = letter.toLowerCase();
+        //console.log(letter);
+      }
+      // check if this.guesses includes the letter. Throw an error if it has been guessed already.
+
+      if(!this.guesses.includes(letter)){
+        //add the new letter to the guesses array.
+        this.guesses.push(letter);
+        //console.log("the arr " + this.guesses + " now includes " + letter )
+    }else{
+        throw new Error("You have guessed this letter!");
+    }
+      
     // check if the word includes the guessed letter:
-    //    if it's is call checkWin()
-    //    if it's not call onWrongGuess()
+    if(this.word.includes(letter)){
+      this.checkWin()
+      console.log("you guess right")
+    }else{
+      this.onWrongGuess()
+      console.log("you guess worng")
+    }
+    } catch (error) {
+      alert(error + error.stack);
+    }
+
   }
+
 
   checkWin() {
     // using the word and the guesses array, figure out how many remaining unknowns.
+    let wordUnknowns = 
+    this.word
+    .split('')
+    .filter(words => !this.guesses.includes(words)).length;
+    console.log(wordUnknowns)
+      
     // if zero, set both didWin, and isOver to true
+    if(wordUnknowns == 0){
+      this.isOver = true;
+      this.didWin = true;
+    }
   }
 
   /**
@@ -75,7 +125,15 @@ class Hangman {
    * drawHead, drawBody, drawRightArm, drawLeftArm, drawRightLeg, or drawLeftLeg.
    * if the number wrong guesses is 6, then also set isOver to true and didWin to false.
    */
-  onWrongGuess() {}
+   onWrongGuess() {
+    let wordArrlength = this.word.length;
+    let wordArr = this.word.split('');
+
+    let word_onWrongGuess = this.word;
+    let guessArr = this.guesses;
+    guessArr.filter(function(word){
+      word_onWrongGuess.includes(word);
+    })
 
   /**
    * This function will return a string of the word placeholder
