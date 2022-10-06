@@ -188,15 +188,51 @@ class Hangman {
     this.ctx.fillRect(10, 410, 175, 10); // Base
   }
 
-  drawHead() {}
+  drawHead() {
+    console.log("head")
+    //ctx.arc(x, y, radius, srart angle, end angle, false/true);
+    //this.ctx.beginPath();
+    this.ctx.beginPath();
+    this.ctx.arc(250, 85, 25, 0, Math.PI *2, false);
+    this.ctx.stroke();
+  }
+  drawBody() {
+    console.log("body")
+    this.ctx.fillRect(245, 110, 10, 80, false);
+  }
 
-  drawBody() {}
 
-  drawLeftArm() {}
+  drawRightArm() {
+    console.log("RightArm")
+    this.ctx.beginPath();
+    this.ctx.moveTo(250, 175);
+    this.ctx.lineTo(330, 100); //liineTo(x=➡, y=⬇)
+    this.ctx.stroke();
+  }
 
-  drawRightArm() {}
+  drawLeftArm() {
+    console.log("LeftArm")
+    this.ctx.beginPath();
+    this.ctx.moveTo(250, 175);
+    this.ctx.lineTo(170, 100);    //liineTo(x=➡, y=⬇)
+    this.ctx.stroke();
 
-  drawLeftLeg() {}
+  }
 
-  drawRightLeg() {}
+  drawLeftLeg() {
+    console.log("LeftLeg")
+    this.ctx.beginPath();
+    this.ctx.moveTo(245, 190);
+    this.ctx.lineTo(170, 250);
+    this.ctx.stroke();
+  }
+  drawRightLeg() {
+    console.log("RightLeg")
+    this.ctx.beginPath();
+    this.ctx.moveTo(255, 190);
+    this.ctx.lineTo(330, 250);
+    this.ctx.stroke();
+
+
+  }
 }
