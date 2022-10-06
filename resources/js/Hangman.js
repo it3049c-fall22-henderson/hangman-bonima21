@@ -134,6 +134,30 @@ class Hangman {
     guessArr.filter(function(word){
       word_onWrongGuess.includes(word);
     })
+    if(guessArr.length == 1 ){
+      this.drawHead();
+    }
+    if(guessArr.length == 2 ){
+      this.drawBody();
+    }
+    if(guessArr.length == 3 ){
+      this.drawRightArm();
+    }
+    if(guessArr.length == 4 ){
+      this.drawLeftArm();
+    }
+    if(guessArr.length == 5 ){
+      this.drawRightLeg();
+    }
+    if(guessArr.length == 6 ){
+      this.drawLeftLeg();
+
+      this.isOver = true;
+      this.didWin = false;
+    }
+    
+    
+  }
 
   /**
    * This function will return a string of the word placeholder
